@@ -20,7 +20,7 @@ logger.addHandler(console_handler)
 def main():
     try:
         # 1. Load Data check
-        test_path = './data/features/test_bow.csv'
+        test_path = './data/features/test_tfidf.csv'
         model_path = 'models/model.pkl'
 
         if not os.path.exists(test_path):

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 import sys
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import yaml
 import logging
 
@@ -33,8 +33,8 @@ def save_data(data_path: str, train_df: pd.DataFrame, test_df: pd.DataFrame) -> 
     try:
         os.makedirs(data_path, exist_ok=True)
         # index=False use karein taaki csv mein extra column na jude
-        train_df.to_csv(os.path.join(data_path, "train_bow.csv"), index=False)
-        test_df.to_csv(os.path.join(data_path, "test_bow.csv"), index=False)
+        train_df.to_csv(os.path.join(data_path, "train_tfidf.csv"), index=False)
+        test_df.to_csv(os.path.join(data_path, "test_tfidf.csv"), index=False)
         logger.info(f"BoW features successfully save ho gaye: {data_path}")
     except Exception as e:
         logger.error(f"Data save karne mein error: {e}")
@@ -68,17 +68,17 @@ def main():
         x_test, y_test = test_data['text'].values, test_data['label'].values
 
         # 5. Vectorization
-        logger.info(f"CountVectorizer apply ho raha hai (max_features={max_features})...")
-        vectorizer = CountVectorizer(max_features=max_features)
+        logger.info(f"TfidfVectorizer apply ho raha hai (max_features={max_features})...")
+        vectorizer = TfidfVectorizer(max_features=max_features)
         
-        x_train_bow = vectorizer.fit_transform(x_train)
-        x_test_bow = vectorizer.transform(x_test)
+        x_train_tfidf = vectorizer.fit_transform(x_train)
+        x_test_tfidf = vectorizer.transform(x_test)
 
         # 6. Create Resulting DataFrames
-        train_df = pd.DataFrame(x_train_bow.toarray())
+        train_df = pd.DataFrame(x_train_tfidf.toarray())
         train_df['label'] = y_train
         
-        test_df = pd.DataFrame(x_test_bow.toarray())
+        test_df = pd.DataFrame(x_test_tfidf.toarray())
         test_df['label'] = y_test
 
         # 7. Save

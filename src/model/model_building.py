@@ -43,7 +43,7 @@ def save_model(clf, data_path: str) -> None:
 def main() -> None:
     try:
         # 1. Load Data
-        train_path = './data/features/train_bow.csv'
+        train_path = './data/features/train_tfidf.csv'
         if not os.path.exists(train_path):
             raise FileNotFoundError(f"Feature file nahi mili: {train_path}")
 
