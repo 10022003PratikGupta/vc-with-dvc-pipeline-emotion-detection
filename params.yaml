@@ -2,7 +2,7 @@
    test_size : 0.1
 
  feature_engineering:
-   max_features: 1015
+   max_features: 1010
 
  model_building:
    max_iter: 40
